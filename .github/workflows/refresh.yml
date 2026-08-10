@@ -1,0 +1,13 @@
+name: Refresh Threat Intel
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping refresh endpoint
+        run: curl -f "https://threat-intel-dashboard-mqs3.onrender.com/refresh?key=mykey123"
