@@ -285,6 +285,20 @@ def export():
     )
 
 
+@app.route("/refresh")
+def refresh():
+    secret = request.args.get("key", "")
+    expected = os.environ.get("REFRESH_KEY", "")
+    if not expected or secret != expected:
+        return "Forbidden", 403
+    import ingest
+    try:
+        ingest.run()
+        return "Refresh complete", 200
+    except Exception as e:
+        return f"Refresh failed: {e}", 500
+
+
 if __name__ == "__main__":
     if not os.path.exists(DB_PATH):
         print("No index found yet — run ingest.py first.")
