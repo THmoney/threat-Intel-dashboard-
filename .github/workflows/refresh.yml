@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping refresh endpoint
-        run: curl -f "https://threat-intel-dashboard-mqs3.onrender.com/refresh?key=mykey123"
+        run: curl -f "https://threat-intel-dashboard-mqs3.onrender.com/refresh?key=NeoFox26"
