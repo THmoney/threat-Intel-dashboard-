@@ -9,5 +9,22 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping refresh endpoint
-        run: curl -f "https://threat-intel-dashboard-mqs3.onrender.com/refresh?key=NeoFox26"
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run ingest
+        run: python ingest.py
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/index.db
+          git diff --staged --quiet || git commit -m "Automated data refresh"
+          git push
